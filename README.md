@@ -146,7 +146,7 @@
       
 Quy ước: cột bên phải tức là khối div có class right, cột bên trái là khối div có class left
 
-# 1. Vấn đề:
+# 2.1. Vấn đề:
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Giả sử ta cột phải ta có rất nhiều element bên dưới nữa, sau khi Vuejs đổ data và render ra view. Và chiều cao của cột phải trên ta ko biết rõ là bao nhiêu (có thể 100px, 200px hay 350px … tùy thuộc vào data được đổ ra)
 
@@ -154,7 +154,7 @@ Quy ước: cột bên phải tức là khối div có class right, cột bên t
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Tới đây có thể vài bạn sẽ nghĩ chúng ta set 1 chiều cao chung cho cả 2 div thế là xong, tuy nhiên vì chiều cao của cột bên phải là ko cố định và nó thay đổi → khi render ra view nó sẽ bị lệch lên lệch xuống 1 chút. Như vậy, chiều cao 2 bên sẽ ko bằng khít với nhau được .Thứ 2 là, khi chiều cao cột bên phải thay đổi, thì chiều cao của cột bên trái cũng không tự thay đổi để bằng cột bên phải được vì chúng ta đã set cứng chiều cao cho cả 2 bên. Do đó chúng ta ko chơi kiểu set cứng height được :D
 
-# 2. Ý tưởng:
+# 2.2. Ý tưởng:
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Thay vì cách đó chúng ta sẽ lấy chiều cao của cột bên phải, sau đó gán cho cột bên trái. Và chúng ta đang dùng Vue, nên bất cứ khi nào chiều cao cột phải thay đổi thì chiều cao của cột trái tự động cx sẽ thay đổi theo - và chiều cao 2 bên sẽ bằng khít nhau luôn.
 
@@ -232,7 +232,7 @@ methods: {
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Hơi loằng ngoằng 1 chút nhưng cũng khá đơn giản thôi phải không nào, chúc các bạn thành công, hẹn gặp lại các bạn :)))
 
-Tài liệu tham khảo:
+# 3. Tài liệu tham khảo:
 
 * [https://snook.ca/archives/html_and_css/getting_your_di](https://snook.ca/archives/html_and_css/getting_your_di)
 * [https://scotch.io/bar-talk/different-tricks-on-how-to-make-bootstrap-columns-all-the-same-height](https://scotch.io/bar-talk/different-tricks-on-how-to-make-bootstrap-columns-all-the-same-height)
