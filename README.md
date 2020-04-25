@@ -1,5 +1,134 @@
 # Set chiều cao động cho 1 element trong Vuejs
 
+# 1. Equal column là gì ?
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Trước hết, **equal column** hay **đồng nhất column** là như thế nào. Ví dụ, trong css ta làm thế nào để 2 column trong hệ thống grid của bootstrap có chiều cao luôn bằng nhau, khi mà content của 1 trong 2 column dài ra thì height của column đó cũng bị dài theo. Nếu ta không xử lý gì thì column nào có height của content lớn hơn thì column đó sẽ height lớn hơn column còn lại. Đây là điều thường xuyên chúng ta gặp phải khi thiết kế giao diện với bootstrap
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Trong css, để cân bằng được 2 column như thế bất kể nội dung bên trong 2 column có chiều cao bao nhiêu, mình xin chia sẻ có 3 cách để thực hiện:
+
+**Cách 1: Làm cho các thẻ div hoạt động giống như 1 table**
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Table ko chỉ ứng dụng để thiết kể bảng biểu mà nó còn để căn đều các column bên trong nó. Vì các cell trong table đều có kích thước giống nhau đúng ko nào. Ví dụ ta có đoạn code như sau:
+
+```
+<div id="container">
+  <div id="row">
+
+  	<div id="left">
+  		<h4>Left Col</h4>
+  		<p>...</p>
+  	</div>
+
+  	<div id="middle">
+  		<h4>Middle Col</h4>
+  		<p>...</p>
+  	</div>
+
+  	<div id="right">
+    	<h4>Right Col</h4>
+    	<p>...</p>
+  	</div>
+
+	</div>
+</div>
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Để làm cho các thẻ div hoạt động giống table ta sẽ sử dụng thuộc tính display với 3 giá trị là: table, table-row và table-cell như sau
+
+```
+  #container {
+    display: table;
+    }
+
+  #row  {
+    display: table-row;
+    }
+
+  #left, #right, #middle {
+    display: table-cell;
+    }
+```
+
+**Cách 2: Sử dụng Negative Margin và Huge Padding Trick**
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cách tiếp cận này thực sự, thực sự tuyệt vời và có lẽ là giải pháp tốt nhất cho hầu hết mọi người. Mình cx không biết ai đã nghĩ ra nó, nhưng nó siêu sáng tạo và có nhiều lợi ích:
+
+* Có reponsive luôn mà ko phải suy nghĩ nhiều
+* Tốn ít effort hơn để đảm bảo nó hoạt động tốt trong các tình huống khác nhau
+* Làm việc trên tất cả các column bất kể kích thước của chúng
+
+```
+<div class="row match-my-cols">
+    <div class="col-sm-4">...</div>
+    <div class="col-sm-4">...</div>
+    <div class="col-sm-4">...</div>
+</div>
+```
+
+```
+.row.match-my-cols {
+    overflow: hidden; 
+}
+
+.row.match-my-cols [class*="col-"]{
+    margin-bottom: -99999px;
+    padding-bottom: 99999px;
+}
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Bản chất cách hoạt động là: Nó thêm 99999px height vào column thông qua padding và sau đó sử dụng negative margin để buộc vị trí như thể nó không có ở đó. Sau đó, .row chỉ che giấu bất cứ điều gì bị tràn.
+
+**Cách 3: Sử dụng các thuộc tính của flex-box**
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Flex-box là công cụ rất tuyệt vời để căn chỉnh giao diện theo ý mình mong muốn mà ko cần quan tâm đến width và height của các phần tử. Ngoài ra, nó còn rất dễ sử dụng nữa
+
+```
+<div class="row is-flex">
+    <div class="col-sm-4">...</div>
+    <div class="col-sm-4">...</div>
+    <div class="col-sm-4">...</div>
+</div>
+```
+
+```
+.row.is-flex {
+    display: flex;
+    flex-wrap: wrap;
+}
+.row.is-flex > [class*='col-'] {
+    display: flex;
+    flex-direction: column;
+}
+
+/*
+* And with max cross-browser enabled.
+* Nobody should ever write this by hand. 
+* Use a preprocesser with autoprefixing.
+*/
+.row.is-flex {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+.row.is-flex > [class*='col-'] {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+```
+
+# 2. Thực hành
+
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Hôm nay mình sẽ trình bày cách chúng ta set động chiều cao cho 1 element phụ thuộc vào chiều cao của 1 element khác. Tức là chiều cao của element của chúng ta có thể thay đổi tự động được. Và mình tin chắc rằng đây là vấn đề chúng ta thường sẽ gặp phải khi làm giao diện với Vuejs
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Để đơn giản, giả sử chúng ta có 1 đoạn code dưới đây:
@@ -103,34 +232,7 @@ methods: {
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Hơi loằng ngoằng 1 chút nhưng cũng khá đơn giản thôi phải không nào, chúc các bạn thành công, hẹn gặp lại các bạn :)))
 
+Tài liệu tham khảo:
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+* [https://snook.ca/archives/html_and_css/getting_your_di](https://snook.ca/archives/html_and_css/getting_your_di)
+* [https://scotch.io/bar-talk/different-tricks-on-how-to-make-bootstrap-columns-all-the-same-height](https://scotch.io/bar-talk/different-tricks-on-how-to-make-bootstrap-columns-all-the-same-height)
