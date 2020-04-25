@@ -11,23 +11,22 @@
 
 ```
 <div id="container">
-  <div id="row">
+	<div id="row">
 
-  	<div id="left">
-  		<h4>Left Col</h4>
-  		<p>...</p>
-  	</div>
+		<div id="left">
+			<h4>Left Col</h4>
+			<p>...</p>
+		</div>
 
-  	<div id="middle">
-  		<h4>Middle Col</h4>
-  		<p>...</p>
-  	</div>
+		<div id="middle">
+			<h4>Middle Col</h4>
+			<p>...</p>
+		</div>
 
-  	<div id="right">
-    	<h4>Right Col</h4>
-    	<p>...</p>
-  	</div>
-
+		<div id="right">
+			<h4>Right Col</h4>
+			<p>...</p>
+		</div>
 	</div>
 </div>
 ```
